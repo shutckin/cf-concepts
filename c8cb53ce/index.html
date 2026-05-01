@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
     <title>Aurum Coffee — концепт · AIVFX</title>
-    <meta name="description" content="Демо-концепт для теста шаблона. Это не реальный проект." />
+    <meta name="description" content="Демо-концепт. Это не реальный проект." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -18,6 +18,7 @@
         --bg-2: #111110;
         --bg-3: #1a1815;
         --line: #2a2622;
+        --line-2: #3a352f;
         --ink: #f5f2ec;
         --ink-2: #f2ece0;
         --mute: #b8b3aa;
@@ -29,27 +30,60 @@
         --font-display: "Inter Tight", -apple-system, system-ui, sans-serif;
         --font-body: "Inter", -apple-system, system-ui, sans-serif;
         --font-mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
-        --grid-max: 1120px;
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-fast: cubic-bezier(0.4, 0, 0.2, 1);
       }
+
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html { scroll-behavior: smooth; }
       body {
         font-family: var(--font-body);
         background: var(--bg);
         color: var(--ink);
-        line-height: 1.55;
+        line-height: 1.5;
         font-size: 17px;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
         position: relative;
         overflow-x: hidden;
+        cursor: none;
       }
+
+      /* Custom cursor */
+      .cursor-dot, .cursor-ring {
+        position: fixed; top: 0; left: 0;
+        pointer-events: none; z-index: 9999;
+        will-change: transform;
+        mix-blend-mode: difference;
+      }
+      .cursor-dot {
+        width: 6px; height: 6px;
+        background: var(--ink);
+        border-radius: 50%;
+        transition: width 0.2s var(--ease), height 0.2s var(--ease);
+      }
+      .cursor-ring {
+        width: 36px; height: 36px;
+        border: 1px solid var(--ink);
+        border-radius: 50%;
+        transition: width 0.3s var(--ease), height 0.3s var(--ease),
+                    border-color 0.3s var(--ease), background 0.3s var(--ease);
+      }
+      body.cursor-hover .cursor-dot { width: 0; height: 0; }
+      body.cursor-hover .cursor-ring {
+        width: 80px; height: 80px;
+        background: rgba(240, 165, 0, 0.15);
+        border-color: var(--accent);
+      }
+      @media (hover: none), (pointer: coarse) {
+        body { cursor: auto; }
+        .cursor-dot, .cursor-ring { display: none; }
+      }
+
       body::before {
         content: "";
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 0;
+        position: fixed; inset: 0;
+        pointer-events: none; z-index: 0;
         background-image:
           radial-gradient(rgba(245, 242, 236, 0.025) 1px, transparent 1.5px),
           radial-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 1.5px);
@@ -58,29 +92,32 @@
         opacity: 0.5;
         mix-blend-mode: overlay;
       }
+
       .container {
-        max-width: var(--grid-max);
+        max-width: 1440px;
         margin: 0 auto;
-        padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 2.5rem);
+        padding: 0 clamp(1.5rem, 4vw, 4rem);
         position: relative;
         z-index: 1;
       }
+
       .topbar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        padding: 1.5rem clamp(1.5rem, 4vw, 4rem);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1.25rem clamp(1.25rem, 4vw, 2.5rem);
-        max-width: var(--grid-max);
-        margin: 0 auto;
         font-family: var(--font-mono);
         font-size: 0.78rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: var(--mute);
-        position: relative;
-        z-index: 1;
+        z-index: 50;
+        background: linear-gradient(to bottom, rgba(10,9,8,0.9), transparent);
+        backdrop-filter: blur(6px);
       }
-      .topbar .brand { color: var(--ink); font-weight: 500; }
+      .topbar .brand { color: var(--ink); font-weight: 500; font-size: 0.9rem; }
       .topbar .brand .dot {
         display: inline-block;
         width: 6px; height: 6px;
@@ -89,231 +126,343 @@
         margin-right: 8px;
         vertical-align: 2px;
       }
-      header.hero {
-        padding-top: clamp(3rem, 8vw, 6rem);
-        padding-bottom: clamp(3rem, 6vw, 5rem);
-        border-bottom: 1px solid var(--line);
-        margin-bottom: clamp(3rem, 6vw, 5rem);
+      .topbar .right { display: flex; gap: 2rem; }
+
+      .hero {
+        min-height: 100vh;
+        padding-top: clamp(7rem, 14vh, 10rem);
+        padding-bottom: clamp(4rem, 8vh, 6rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       }
-      .kicker {
+      .hero-kicker {
         font-family: var(--font-mono);
         font-size: 0.78rem;
         text-transform: uppercase;
         letter-spacing: 0.22em;
         color: var(--accent);
-        margin-bottom: 2rem;
+        margin-bottom: clamp(2rem, 5vw, 3.5rem);
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 0.85rem;
       }
-      .kicker::before {
+      .hero-kicker::before {
         content: "";
-        width: 28px;
-        height: 1px;
+        width: 32px; height: 1px;
         background: var(--accent);
       }
-      h1 {
+      .hero h1 {
         font-family: var(--font-display);
-        font-size: clamp(2.6rem, 7vw, 5.2rem);
+        font-size: clamp(3rem, 11vw, 11rem);
         font-weight: 700;
-        line-height: 0.98;
-        letter-spacing: -0.025em;
-        margin-bottom: 1.75rem;
+        line-height: 0.92;
+        letter-spacing: -0.04em;
         color: var(--ink);
+        margin-bottom: clamp(2rem, 4vw, 3rem);
+        max-width: 13ch;
       }
-      h1 em { font-style: normal; color: var(--accent); }
-      .logline {
+      .hero h1 em { font-style: italic; font-weight: 400; color: var(--accent); }
+      .hero-bottom {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 3rem;
+        align-items: end;
+        padding-top: 3rem;
+        border-top: 1px solid var(--line);
+      }
+      @media (max-width: 720px) {
+        .hero-bottom { grid-template-columns: 1fr; }
+      }
+      .hero-logline {
         font-family: var(--font-display);
-        font-size: clamp(1.15rem, 2vw, 1.45rem);
+        font-size: clamp(1.05rem, 1.5vw, 1.3rem);
         font-weight: 300;
         line-height: 1.45;
         color: var(--mute);
-        max-width: 62ch;
+        max-width: 52ch;
       }
-      .meta {
+      .hero-meta {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        grid-template-columns: repeat(2, auto);
         gap: 1.5rem 2.5rem;
-        margin-top: 3rem;
-        padding-top: 2rem;
-        border-top: 1px solid var(--line);
+        text-align: right;
       }
-      .meta div {
+      @media (max-width: 720px) { .hero-meta { text-align: left; } }
+      .hero-meta div {
         font-family: var(--font-mono);
-        font-size: 0.72rem;
+        font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 0.15em;
         color: var(--mute-3);
       }
-      .meta div span {
+      .hero-meta div span {
         display: block;
         color: var(--ink);
         margin-top: 0.4rem;
         font-family: var(--font-display);
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 500;
         text-transform: none;
         letter-spacing: 0;
       }
-      section { margin-bottom: clamp(3rem, 6vw, 5rem); }
-      .section-num {
-        font-family: var(--font-mono);
-        font-size: 0.72rem;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
+
+      .marquee {
+        padding: clamp(3rem, 6vw, 5rem) 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .marquee-track {
+        display: inline-flex;
+        gap: 4rem;
+        animation: marquee 40s linear infinite;
+        font-family: var(--font-display);
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1;
+        color: var(--ink);
+      }
+      .marquee-track span.dim { color: var(--mute-3); font-style: italic; font-weight: 300; }
+      .marquee-track span.dot { color: var(--accent); }
+      @keyframes marquee {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
+
+      section.block {
+        padding: clamp(5rem, 10vw, 9rem) 0;
+        position: relative;
+      }
+      .block-grid {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: clamp(1.5rem, 4vw, 4rem);
+        align-items: start;
+      }
+      @media (max-width: 720px) { .block-grid { grid-template-columns: 1fr; } }
+      .block-num {
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 5vw, 4.5rem);
+        font-weight: 200;
+        line-height: 0.9;
         color: var(--mute-3);
-        margin-bottom: 0.75rem;
+        position: sticky;
+        top: 6rem;
       }
-      h2 {
+      @media (max-width: 720px) { .block-num { position: static; font-size: 2.5rem; } }
+      .block-content h2 {
         font-family: var(--font-display);
-        font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+        font-size: clamp(2.2rem, 5vw, 4rem);
         font-weight: 600;
-        line-height: 1.05;
-        letter-spacing: -0.015em;
-        margin-bottom: 2rem;
+        line-height: 1;
+        letter-spacing: -0.025em;
+        margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
         color: var(--ink);
       }
-      h3 {
-        font-family: var(--font-display);
-        font-size: 1.15rem;
-        font-weight: 600;
-        margin: 1.5rem 0 0.75rem;
-        color: var(--ink);
+      .block-content p {
+        font-size: clamp(1rem, 1.2vw, 1.15rem);
+        line-height: 1.55;
+        margin-bottom: 1.25rem;
+        color: var(--ink-2);
+        max-width: 60ch;
       }
-      p { margin-bottom: 1rem; color: var(--ink-2); }
-      ul, ol { margin-left: 1.25rem; margin-bottom: 1rem; color: var(--ink-2); }
-      li { margin-bottom: 0.5rem; }
+      .block-content ul { list-style: none; margin: 1.5rem 0; }
+      .block-content ul li {
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 1.05rem;
+        color: var(--ink-2);
+        display: flex;
+        gap: 1rem;
+        align-items: baseline;
+      }
+      .block-content ul li::before {
+        content: "→";
+        color: var(--accent);
+        font-family: var(--font-display);
+        font-size: 1.15em;
+      }
       strong { color: var(--ink); font-weight: 600; }
       em { color: var(--accent); font-style: normal; }
 
-      .visual-strategy {
+      .strategy-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 1px;
         background: var(--line);
         border: 1px solid var(--line);
+        margin-top: 2rem;
       }
-      .visual-card { background: var(--bg-2); padding: 1.75rem; }
-      .visual-card .label {
+      .strategy-card {
+        background: var(--bg-2);
+        padding: clamp(1.5rem, 2.5vw, 2.25rem);
+        transition: background 0.4s var(--ease);
+      }
+      .strategy-card:hover { background: var(--bg-3); }
+      .strategy-card .label {
         font-family: var(--font-mono);
         font-size: 0.7rem;
         text-transform: uppercase;
         letter-spacing: 0.18em;
         color: var(--mute-3);
-        margin-bottom: 0.85rem;
+        margin-bottom: 1rem;
       }
-      .visual-card .value {
+      .strategy-card .value {
         font-family: var(--font-display);
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         font-weight: 500;
         color: var(--ink);
-        line-height: 1.35;
+        line-height: 1.3;
       }
-      .palette-strip { display: flex; gap: 6px; margin-top: 1rem; }
-      .swatch { flex: 1; height: 36px; }
+      .palette-strip { display: flex; gap: 6px; margin-top: 1.25rem; }
+      .swatch { flex: 1; height: 44px; }
 
-      .storyboard {
+      .scenes {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         gap: 1.5rem;
-        margin: 1.5rem 0;
+        margin-top: 2rem;
       }
-      .scene-card {
+      .scene {
+        position: relative;
         background: var(--bg-2);
         border: 1px solid var(--line);
         overflow: hidden;
-        transition: border-color 0.2s ease;
+        transition: transform 0.5s var(--ease), border-color 0.5s var(--ease);
       }
-      .scene-card:hover { border-color: var(--mute-3); }
-      .scene-card .frame {
+      .scene:hover { transform: translateY(-4px); border-color: var(--accent); }
+      .scene .frame {
         aspect-ratio: 16 / 9;
         background: linear-gradient(135deg, var(--bg-3), var(--bg-2));
         position: relative;
+        overflow: hidden;
         border-bottom: 1px solid var(--line);
       }
-      .scene-card .frame::after {
+      .scene .frame::before {
+        content: "";
+        position: absolute; inset: 0;
+        background: radial-gradient(
+          circle at var(--mx, 50%) var(--my, 50%),
+          rgba(240, 165, 0, 0.12) 0%,
+          transparent 50%
+        );
+        opacity: 0;
+        transition: opacity 0.4s var(--ease);
+      }
+      .scene:hover .frame::before { opacity: 1; }
+      .scene .frame::after {
         content: "сцена";
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        position: absolute; inset: 0;
+        display: flex; align-items: center; justify-content: center;
         font-family: var(--font-mono);
         font-size: 0.72rem;
         text-transform: uppercase;
         letter-spacing: 0.2em;
         color: var(--mute-3);
+        transition: color 0.4s var(--ease), letter-spacing 0.4s var(--ease);
       }
-      .scene-card .body { padding: 1.25rem 1.5rem 1.5rem; }
-      .scene-card .timecode {
+      .scene:hover .frame::after { color: var(--accent); letter-spacing: 0.3em; }
+      .scene .body { padding: 1.5rem 1.75rem 1.75rem; }
+      .scene .timecode {
         font-family: var(--font-mono);
         font-size: 0.72rem;
         text-transform: uppercase;
         letter-spacing: 0.15em;
         color: var(--accent);
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.85rem;
       }
-      .scene-card .desc {
+      .scene .desc {
         font-family: var(--font-display);
-        font-size: 1rem;
+        font-size: 1.05rem;
         font-weight: 400;
         color: var(--ink);
         line-height: 1.4;
       }
 
-      .risks-row {
+      .risks {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1px;
         background: var(--line);
         border: 1px solid var(--line);
+        margin-top: 2rem;
       }
-      @media (max-width: 600px) {
-        .risks-row { grid-template-columns: 1fr; }
-      }
-      .risks-row > div { background: var(--bg-2); padding: 1.75rem; }
-      .risks-row h3 {
-        margin-top: 0;
-        margin-bottom: 1rem;
-        font-size: 0.9rem;
+      @media (max-width: 720px) { .risks { grid-template-columns: 1fr; } }
+      .risks > div { background: var(--bg-2); padding: clamp(1.75rem, 3vw, 2.5rem); }
+      .risks h3 {
+        margin-bottom: 1.25rem;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
         text-transform: uppercase;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.14em;
         color: var(--mute);
       }
+      .risks ul li::before { content: "·"; color: var(--accent); font-weight: 700; }
 
-      .next-block {
-        background: var(--bg-2);
-        border: 1px solid var(--line);
-        padding: clamp(2rem, 4vw, 3rem);
-        margin-top: 3rem;
+      .cta-section {
+        padding: clamp(6rem, 12vw, 12rem) 0;
+        text-align: center;
       }
+      .cta-section .lead {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 5vw, 4.5rem);
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: -0.025em;
+        max-width: 16ch;
+        margin: 0 auto 2.5rem;
+        color: var(--ink);
+      }
+      .cta-section .lead em { font-style: italic; font-weight: 300; color: var(--accent); }
+
       .cta {
         display: inline-flex;
         align-items: center;
-        gap: 0.6rem;
+        gap: 0.75rem;
+        padding: 1.4rem 2.5rem;
         background: var(--accent);
         color: var(--bg);
-        padding: 1.05rem 2rem;
         font-family: var(--font-display);
         font-weight: 600;
-        font-size: 1rem;
+        font-size: 1.1rem;
         letter-spacing: -0.01em;
         text-decoration: none;
-        margin-top: 1.5rem;
-        transition: all 0.2s ease;
-        border: 1px solid var(--accent);
+        border-radius: 999px;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s var(--ease);
+        will-change: transform;
       }
-      .cta:hover {
+      .cta::before {
+        content: "";
+        position: absolute; inset: 0;
         background: var(--accent-2);
-        border-color: var(--accent-2);
-        transform: translateY(-1px);
+        transform: translateY(101%);
+        transition: transform 0.4s var(--ease);
+        z-index: 0;
       }
-      .cta::after { content: "→"; font-size: 1.15em; transition: transform 0.2s ease; }
-      .cta:hover::after { transform: translateX(3px); }
+      .cta:hover::before { transform: translateY(0); }
+      .cta span { position: relative; z-index: 1; }
+      .cta .arrow {
+        position: relative; z-index: 1;
+        transition: transform 0.3s var(--ease);
+      }
+      .cta:hover .arrow { transform: translateX(4px); }
+
+      .cta-section .sub {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--mute-3);
+        margin-top: 2.5rem;
+      }
 
       footer {
-        margin-top: 6rem;
-        padding-top: 2.5rem;
+        padding: clamp(2rem, 4vw, 3rem) 0;
         border-top: 1px solid var(--line);
         font-family: var(--font-mono);
         font-size: 0.75rem;
@@ -325,191 +474,322 @@
         flex-wrap: wrap;
         gap: 1rem;
       }
-      footer a { color: var(--ink); text-decoration: none; }
+      footer a { color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
       footer a:hover { color: var(--accent); }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+      }
+      .reveal.in { opacity: 1; transform: translateY(0); }
+      .reveal-line { display: block; overflow: hidden; }
+      .reveal-line > span {
+        display: block;
+        transform: translateY(110%);
+        transition: transform 1s var(--ease);
+      }
+      .reveal-line.in > span { transform: translateY(0); }
+
+      a, button, .scene, .cta, [data-hover] { cursor: none; }
     </style>
   </head>
   <body>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
     <div class="topbar">
-      <div class="brand"><span class="dot"></span>AIVFX</div>
-      <div>Демо-концепт · 2026</div>
+      <div class="brand" data-hover><span class="dot"></span>AIVFX</div>
+      <div class="right">
+        <span>Концепт</span>
+        <span>2026</span>
+      </div>
     </div>
 
     <div class="container">
       <header class="hero">
-        <div class="kicker">Концепт · Социальная реклама</div>
-        <h1>Утро <em>звучит</em> по-другому</h1>
-        <p class="logline">
-          15-секундный ролик для Aurum Coffee — о моменте, когда первый глоток меняет настроение
-          целого дня. Тёплая физика пара, медь, дерево, и точное движение бариста.
-        </p>
-        <div class="meta">
-          <div>Заказчик<span>Aurum Coffee</span></div>
-          <div>Формат<span>9:16 вертикаль</span></div>
-          <div>Длительность<span>15 секунд</span></div>
-          <div>Срок<span>Через две недели</span></div>
+        <div>
+          <div class="hero-kicker reveal">Концепт · Социальная реклама</div>
+          <h1>
+            <span class="reveal-line"><span>Утро</span></span>
+            <span class="reveal-line"><span><em>звучит</em></span></span>
+            <span class="reveal-line"><span>по-другому</span></span>
+          </h1>
+        </div>
+        <div class="hero-bottom reveal">
+          <p class="hero-logline">
+            15-секундный ролик для Aurum Coffee — о моменте, когда первый глоток меняет настроение
+            целого дня. Тёплая физика пара, медь, дерево, точное движение бариста.
+          </p>
+          <div class="hero-meta">
+            <div>Заказчик<span>Aurum Coffee</span></div>
+            <div>Формат<span>9:16</span></div>
+            <div>Длительность<span>15 секунд</span></div>
+            <div>Срок<span>Две недели</span></div>
+          </div>
         </div>
       </header>
+    </div>
 
-      <section id="idea">
-        <div class="section-num">01 — Идея</div>
-        <h2>Тишина, потом — звук</h2>
-        <p>
-          Ролик строится на контрасте. Первые три секунды — почти беззвучные:
-          тёмная стойка, медный портафильтр, рука бариста. Потом — резкий, чёткий звук эспрессо-машины,
-          и в кадре оживает всё: пар, текстура зерна, отражение света на меди.
-        </p>
-        <p>
-          Это не про кофейню в общем — это про <strong>первый глоток</strong>. Момент, который
-          оправдывает раннее пробуждение и идёт впереди работы.
-        </p>
-      </section>
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>Утро</span><span class="dot">●</span>
+        <span class="dim">тишина</span><span class="dot">●</span>
+        <span>пар</span><span class="dot">●</span>
+        <span class="dim">медь</span><span class="dot">●</span>
+        <span>ритуал</span><span class="dot">●</span>
+        <span class="dim">первый глоток</span><span class="dot">●</span>
+        <span>Утро</span><span class="dot">●</span>
+        <span class="dim">тишина</span><span class="dot">●</span>
+        <span>пар</span><span class="dot">●</span>
+        <span class="dim">медь</span><span class="dot">●</span>
+        <span>ритуал</span><span class="dot">●</span>
+        <span class="dim">первый глоток</span><span class="dot">●</span>
+      </div>
+    </div>
 
-      <section id="strategy">
-        <div class="section-num">02 — Визуальная стратегия</div>
-        <h2>Как это будет выглядеть</h2>
-        <div class="visual-strategy">
-          <div class="visual-card">
-            <div class="label">Палитра</div>
-            <div class="value">Тёплый дарк, медь, кремовая пенка</div>
-            <div class="palette-strip">
-              <div class="swatch" style="background:#1a1410"></div>
-              <div class="swatch" style="background:#3d2817"></div>
-              <div class="swatch" style="background:#a86b3c"></div>
-              <div class="swatch" style="background:#d4a574"></div>
-              <div class="swatch" style="background:#f0e5d3"></div>
-            </div>
-          </div>
-          <div class="visual-card">
-            <div class="label">Типографика</div>
-            <div class="value">Inter Tight Bold + засечный курсив для слогана</div>
-          </div>
-          <div class="visual-card">
-            <div class="label">Тип съёмки</div>
-            <div class="value">Макро-крупняки, медленная камера, естественное боковое освещение</div>
-          </div>
-          <div class="visual-card">
-            <div class="label">Настроение</div>
-            <div class="value">Сосредоточенное, ритуальное, тактильное</div>
+    <div class="container">
+      <section class="block reveal">
+        <div class="block-grid">
+          <div class="block-num">01</div>
+          <div class="block-content">
+            <h2>Тишина, потом — звук</h2>
+            <p>
+              Ролик строится на контрасте. Первые три секунды — почти беззвучные:
+              тёмная стойка, медный портафильтр, рука бариста. Потом — резкий, чёткий звук
+              эспрессо-машины, и в кадре оживает всё: пар, текстура зерна, отражение света на меди.
+            </p>
+            <p>
+              Это не про кофейню в общем — это про <strong>первый глоток</strong>. Момент,
+              который оправдывает раннее пробуждение и идёт впереди работы.
+            </p>
           </div>
         </div>
       </section>
 
-      <section id="storyboard">
-        <div class="section-num">03 — Раскадровка</div>
-        <h2>Как ролик читается во времени</h2>
-        <p>Черновые ключевые кадры. Финальная визуализация — на следующем шаге.</p>
-        <div class="storyboard">
-          <div class="scene-card">
-            <div class="frame"></div>
-            <div class="body">
-              <div class="timecode">00:00 — 00:02</div>
-              <div class="desc">Тёмная стойка, медный портафильтр на свету. Тишина.</div>
-            </div>
-          </div>
-          <div class="scene-card">
-            <div class="frame"></div>
-            <div class="body">
-              <div class="timecode">00:02 — 00:04</div>
-              <div class="desc">Рука бариста — точное движение, утрамбовка молотого кофе.</div>
-            </div>
-          </div>
-          <div class="scene-card">
-            <div class="frame"></div>
-            <div class="body">
-              <div class="timecode">00:04 — 00:07</div>
-              <div class="desc">Резкий звук — пар, эспрессо льётся в тонкую струю. Свет вспыхивает.</div>
-            </div>
-          </div>
-          <div class="scene-card">
-            <div class="frame"></div>
-            <div class="body">
-              <div class="timecode">00:07 — 00:10</div>
-              <div class="desc">Чашка на дереве. Молочная пенка рисуется ровно, медленно.</div>
-            </div>
-          </div>
-          <div class="scene-card">
-            <div class="frame"></div>
-            <div class="body">
-              <div class="timecode">00:10 — 00:13</div>
-              <div class="desc">Первый глоток. Глаза закрываются на полсекунды.</div>
-            </div>
-          </div>
-          <div class="scene-card">
-            <div class="frame"></div>
-            <div class="body">
-              <div class="timecode">00:13 — 00:15</div>
-              <div class="desc">Логотип Aurum Coffee, слоган: «Утро звучит по-другому».</div>
+      <section class="block reveal">
+        <div class="block-grid">
+          <div class="block-num">02</div>
+          <div class="block-content">
+            <h2>Как это будет выглядеть</h2>
+            <div class="strategy-grid">
+              <div class="strategy-card" data-hover>
+                <div class="label">Палитра</div>
+                <div class="value">Тёплый дарк, медь, кремовая пенка</div>
+                <div class="palette-strip">
+                  <div class="swatch" style="background:#1a1410"></div>
+                  <div class="swatch" style="background:#3d2817"></div>
+                  <div class="swatch" style="background:#a86b3c"></div>
+                  <div class="swatch" style="background:#d4a574"></div>
+                  <div class="swatch" style="background:#f0e5d3"></div>
+                </div>
+              </div>
+              <div class="strategy-card" data-hover>
+                <div class="label">Типографика</div>
+                <div class="value">Inter Tight Bold + засечный курсив для слогана</div>
+              </div>
+              <div class="strategy-card" data-hover>
+                <div class="label">Тип съёмки</div>
+                <div class="value">Макро-крупняки, медленная камера, естественный боковой свет</div>
+              </div>
+              <div class="strategy-card" data-hover>
+                <div class="label">Настроение</div>
+                <div class="value">Сосредоточенное, ритуальное, тактильное</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="sound">
-        <div class="section-num">04 — Звук</div>
-        <h2>Что зритель слышит</h2>
-        <p>
-          Первые три секунды — почти полная тишина с фоновым шумом помещения. На 4-й секунде
-          включается синхронный звук эспрессо-машины, потом — мягкая ритмичная композиция в
-          медленном темпе. Голоса нет.
-        </p>
-        <p>
-          Закадровый текст не используем — слоган появляется только в финале как титр.
-        </p>
+      <section class="block reveal">
+        <div class="block-grid">
+          <div class="block-num">03</div>
+          <div class="block-content">
+            <h2>Как ролик читается во времени</h2>
+            <p>Черновые ключевые кадры. Финальная визуализация — на следующем шаге.</p>
+            <div class="scenes">
+              <div class="scene" data-hover>
+                <div class="frame"></div>
+                <div class="body">
+                  <div class="timecode">00:00 — 00:02</div>
+                  <div class="desc">Тёмная стойка, медный портафильтр на свету. Тишина.</div>
+                </div>
+              </div>
+              <div class="scene" data-hover>
+                <div class="frame"></div>
+                <div class="body">
+                  <div class="timecode">00:02 — 00:04</div>
+                  <div class="desc">Рука бариста — точное движение, утрамбовка молотого кофе.</div>
+                </div>
+              </div>
+              <div class="scene" data-hover>
+                <div class="frame"></div>
+                <div class="body">
+                  <div class="timecode">00:04 — 00:07</div>
+                  <div class="desc">Резкий звук — пар, эспрессо льётся в тонкую струю. Свет вспыхивает.</div>
+                </div>
+              </div>
+              <div class="scene" data-hover>
+                <div class="frame"></div>
+                <div class="body">
+                  <div class="timecode">00:07 — 00:10</div>
+                  <div class="desc">Чашка на дереве. Молочная пенка рисуется ровно, медленно.</div>
+                </div>
+              </div>
+              <div class="scene" data-hover>
+                <div class="frame"></div>
+                <div class="body">
+                  <div class="timecode">00:10 — 00:13</div>
+                  <div class="desc">Первый глоток. Глаза закрываются на полсекунды.</div>
+                </div>
+              </div>
+              <div class="scene" data-hover>
+                <div class="frame"></div>
+                <div class="body">
+                  <div class="timecode">00:13 — 00:15</div>
+                  <div class="desc">Логотип Aurum Coffee, слоган: «Утро звучит по-другому».</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section id="why">
-        <div class="section-num">05 — Аргументы</div>
-        <h2>Почему это сработает</h2>
-        <ul>
-          <li><strong>Контраст тишина → звук</strong> удерживает внимание в первые 3 секунды — критично для вертикального формата.</li>
-          <li><strong>Макро-съёмка</strong> вытаскивает то, что не показывают конкуренты: текстуру кофе, свет на меди, физику пара.</li>
-          <li><strong>Без диктора</strong> — ролик работает в любой стране без локализации.</li>
-          <li><strong>Логотип в финале</strong>, а не на каждом кадре — зритель ассоциирует ощущение, а не бренд-баннер.</li>
-        </ul>
+      <section class="block reveal">
+        <div class="block-grid">
+          <div class="block-num">04</div>
+          <div class="block-content">
+            <h2>Что зритель слышит</h2>
+            <p>
+              Первые три секунды — почти полная тишина с фоновым шумом помещения. На 4-й секунде
+              включается синхронный звук эспрессо-машины, потом — мягкая ритмичная композиция в
+              медленном темпе. Голоса нет.
+            </p>
+            <p>Закадровый текст не используем — слоган появляется только в финале как титр.</p>
+          </div>
+        </div>
       </section>
 
-      <section id="risks">
-        <div class="section-num">06 — Контекст</div>
-        <h2>Что нужно учесть</h2>
-        <div class="risks-row">
-          <div>
-            <h3>На что обратить внимание</h3>
+      <section class="block reveal">
+        <div class="block-grid">
+          <div class="block-num">05</div>
+          <div class="block-content">
+            <h2>Почему это сработает</h2>
             <ul>
-              <li>Выбор бариста — нужен человек с поставленной рукой.</li>
-              <li>Освещение в кафе придётся усилить тёплыми источниками.</li>
-              <li>Звук эспрессо-машины записываем отдельно, не из видео.</li>
+              <li><span><strong>Контраст тишина → звук</strong> удерживает внимание в первые 3 секунды — критично для вертикали.</span></li>
+              <li><span><strong>Макро-съёмка</strong> вытаскивает то, чего не показывают конкуренты: текстуру зерна, свет на меди, физику пара.</span></li>
+              <li><span><strong>Без диктора</strong> — ролик работает в любой стране без локализации.</span></li>
+              <li><span><strong>Логотип в финале</strong>, а не на каждом кадре — зритель ассоциирует ощущение, а не бренд-баннер.</span></li>
             </ul>
           </div>
-          <div>
-            <h3>Что нужно от вас</h3>
-            <ul>
-              <li>Логотип в векторе и брендбук, если есть.</li>
-              <li>Доступ к кафе на полдня для съёмки.</li>
-              <li>Финальное согласование слогана.</li>
-            </ul>
+        </div>
+      </section>
+
+      <section class="block reveal">
+        <div class="block-grid">
+          <div class="block-num">06</div>
+          <div class="block-content">
+            <h2>Что нужно учесть</h2>
+            <div class="risks">
+              <div>
+                <h3>На что обратить внимание</h3>
+                <ul>
+                  <li><span>Выбор бариста — нужен человек с поставленной рукой.</span></li>
+                  <li><span>Освещение в кафе придётся усилить тёплыми источниками.</span></li>
+                  <li><span>Звук эспрессо-машины записываем отдельно, не из видео.</span></li>
+                </ul>
+              </div>
+              <div>
+                <h3>Что нужно от вас</h3>
+                <ul>
+                  <li><span>Логотип в векторе и брендбук, если есть.</span></li>
+                  <li><span>Доступ к кафе на полдня для съёмки.</span></li>
+                  <li><span>Финальное согласование слогана.</span></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="next">
-        <div class="next-block">
-          <div class="section-num">07 — Дальше</div>
-          <h2>Согласуем — поедем дальше</h2>
-          <p>
-            Если концепт нравится — нажмите кнопку ниже или ответьте в рабочем чате.
-            После согласования начинаем готовить раскадровку и съёмочный план.
-          </p>
-          <a href="mailto:tema.shutckin@gmail.com?subject=Концепт Aurum Coffee — согласовано" class="cta">
-            Согласовать концепт
-          </a>
-        </div>
+      <section class="cta-section reveal">
+        <div class="lead">Согласуем — <em>поедем</em> дальше</div>
+        <a href="https://t.me/djiyvlom" target="_blank" rel="noopener" class="cta" data-hover id="ctaButton">
+          <span>Согласовать в Telegram</span>
+          <span class="arrow">→</span>
+        </a>
+        <div class="sub">Концепт действителен 30 дней</div>
       </section>
 
       <footer>
-        <div>AIVFX · <a href="https://aivfx.ru">aivfx.ru</a></div>
-        <div>Концепт действителен 30 дней</div>
+        <div>AIVFX · <a href="https://aivfx.ru" data-hover>aivfx.ru</a></div>
+        <div>Concept #c8cb53ce</div>
       </footer>
     </div>
+
+    <script>
+      (function () {
+        const dot = document.getElementById("cursorDot");
+        const ring = document.getElementById("cursorRing");
+        if (!dot || !ring) return;
+        let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+        let rx = mx, ry = my;
+        document.addEventListener("mousemove", (e) => {
+          mx = e.clientX; my = e.clientY;
+          dot.style.transform = `translate3d(${mx}px, ${my}px, 0) translate(-50%, -50%)`;
+        });
+        function loop() {
+          rx += (mx - rx) * 0.15;
+          ry += (my - ry) * 0.15;
+          ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+          requestAnimationFrame(loop);
+        }
+        loop();
+        document.querySelectorAll("a, button, [data-hover]").forEach((el) => {
+          el.addEventListener("mouseenter", () => document.body.classList.add("cursor-hover"));
+          el.addEventListener("mouseleave", () => document.body.classList.remove("cursor-hover"));
+        });
+      })();
+
+      document.querySelectorAll(".scene").forEach((scene) => {
+        scene.addEventListener("mousemove", (e) => {
+          const rect = scene.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top) / rect.height) * 100;
+          scene.style.setProperty("--mx", x + "%");
+          scene.style.setProperty("--my", y + "%");
+        });
+      });
+
+      (function () {
+        const cta = document.getElementById("ctaButton");
+        if (!cta) return;
+        const strength = 0.25;
+        cta.addEventListener("mousemove", (e) => {
+          const rect = cta.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          cta.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+        });
+        cta.addEventListener("mouseleave", () => {
+          cta.style.transform = "translate(0, 0)";
+        });
+      })();
+
+      (function () {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("in");
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15 }
+        );
+        document.querySelectorAll(".reveal, .reveal-line").forEach((el) => io.observe(el));
+      })();
+    </script>
   </body>
 </html>

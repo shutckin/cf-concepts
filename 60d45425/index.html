@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>CellCode — концепт-документ</title>
+<meta name="description" content="Концептуальные направления для съёмки CellCode. Подготовлено AIVFX для NL." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#f6f1ea;
+    --bg-2:#ece4d6;
+    --bg-3:#e1d6c2;
+    --ink:#1a1612;
+    --ink-2:#2a241d;
+    --mute:#776a5b;
+    --mute-2:#9c8e7c;
+    --line:#d6c9b3;
+    --gold:#b58a4e;
+    --accent:#7a6648;
+    --serif:'Cormorant Garamond', Georgia, serif;
+    --sans:'Inter', -apple-system, system-ui, sans-serif;
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 32px}
+  .micro{font:500 11px/1.4 var(--mono);letter-spacing:0.14em;text-transform:uppercase;color:var(--mute-2)}
+
+  /* Hero */
+  .hero{min-height:88vh;display:flex;flex-direction:column;justify-content:flex-end;padding:48px 0 64px;border-bottom:1px solid var(--line);position:relative}
+  .hero .top{position:absolute;top:32px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 32px}
+  .logo{font:600 14px var(--sans);letter-spacing:0.02em}
+  .hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(56px, 11vw, 168px);line-height:0.95;letter-spacing:-0.02em;margin:0 0 24px;font-style:italic;color:var(--ink)}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero .subline{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:24px;margin-top:24px}
+  .hero .descr{max-width:520px;font-size:17px;line-height:1.5;color:var(--ink-2)}
+  .hero .meta{font:500 12px/1.6 var(--mono);color:var(--mute);text-align:right}
+  .hero .meta b{display:block;color:var(--ink);font-weight:500;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:2px}
+
+  /* Brief block */
+  .brief{padding:96px 0;border-bottom:1px solid var(--line)}
+  .brief h2{font-family:var(--serif);font-weight:400;font-size:clamp(40px,5.5vw,72px);line-height:1.05;margin:0 0 48px;letter-spacing:-0.01em}
+  .brief-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:64px;align-items:start}
+  .brief-text p{font-size:17px;line-height:1.6;color:var(--ink-2);max-width:580px;margin:0 0 18px}
+  .brief-text .quote{font-family:var(--serif);font-style:italic;font-size:28px;line-height:1.3;color:var(--accent);margin:32px 0;padding:0 0 0 24px;border-left:2px solid var(--gold)}
+  .brief-aside{display:grid;grid-template-columns:1fr;gap:16px}
+  .brief-aside img{width:100%;height:auto;border:1px solid var(--line)}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .pill{padding:6px 14px;border:1px solid var(--line);border-radius:999px;font:500 12px/1 var(--mono);color:var(--mute);background:var(--bg-2);letter-spacing:0.04em}
+
+  /* Concept section */
+  .concept{padding:128px 0;border-bottom:1px solid var(--line);position:relative}
+  .concept-header{display:grid;grid-template-columns:auto 1fr auto;gap:40px;align-items:end;margin-bottom:64px}
+  .concept-header .num{font-family:var(--serif);font-weight:300;font-size:clamp(120px, 18vw, 260px);line-height:0.85;color:var(--bg-3);margin:0;letter-spacing:-0.04em}
+  .concept-header .name{margin:0;display:flex;flex-direction:column;gap:8px}
+  .concept-header h2{font-family:var(--serif);font-weight:400;font-size:clamp(36px,4.6vw,64px);line-height:1.05;margin:0;letter-spacing:-0.01em}
+  .concept-header h2 i{color:var(--accent)}
+  .concept-header .tag{font:500 12px var(--mono);letter-spacing:0.18em;text-transform:uppercase;color:var(--mute-2)}
+
+  .concept-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:24px 0;margin-bottom:48px}
+  .concept-meta .col h4{margin:0 0 8px;font:500 11px var(--mono);letter-spacing:0.14em;text-transform:uppercase;color:var(--mute)}
+  .concept-meta .col p{margin:0;font-size:14px;line-height:1.45;color:var(--ink-2)}
+
+  .concept-body{display:grid;grid-template-columns:1fr 1.3fr;gap:64px;margin-bottom:64px}
+  .concept-body h3{font-family:var(--serif);font-size:28px;font-weight:500;margin:0 0 12px}
+  .concept-body p{font-size:16px;line-height:1.6;color:var(--ink-2);margin:0 0 14px;max-width:540px}
+
+  .shots{margin-top:24px}
+  .shots ol{margin:0;padding-left:18px;list-style:none;counter-reset:shot}
+  .shots li{counter-increment:shot;position:relative;padding:14px 0 14px 56px;border-top:1px solid var(--line);font-size:15px;line-height:1.5;color:var(--ink-2)}
+  .shots li:last-child{border-bottom:1px solid var(--line)}
+  .shots li::before{content:counter(shot,decimal-leading-zero);position:absolute;left:0;top:14px;font:500 11px var(--mono);color:var(--gold);letter-spacing:0.08em}
+  .shots li b{display:block;color:var(--ink);font-weight:500;font-family:var(--serif);font-size:18px;margin-bottom:2px}
+
+  /* Moodboard masonry */
+  .moodboard{padding:24px 0}
+  .moodboard .label{display:flex;align-items:baseline;gap:16px;margin-bottom:24px}
+  .moodboard .label h3{font-family:var(--serif);font-size:24px;font-weight:500;margin:0}
+  .grid{column-count:4;column-gap:8px}
+  .grid .tile{break-inside:avoid;margin-bottom:8px;background:var(--bg-2);position:relative;overflow:hidden}
+  .grid .tile img{width:100%;height:auto;display:block;transition:transform .6s ease}
+  .grid .tile:hover img{transform:scale(1.02)}
+
+  @media (max-width: 980px){
+    .brief-grid{grid-template-columns:1fr}
+    .concept-header{grid-template-columns:1fr;gap:8px;text-align:left}
+    .concept-header .num{font-size:108px}
+    .concept-meta{grid-template-columns:repeat(2,1fr);gap:24px}
+    .concept-body{grid-template-columns:1fr;gap:32px}
+    .grid{column-count:2}
+    .hero h1{font-size:64px}
+    .wrap{padding:0 20px}
+  }
+
+  /* Closing */
+  .closing{padding:128px 0 96px;text-align:center}
+  .closing h2{font-family:var(--serif);font-weight:400;font-size:clamp(40px,5.5vw,72px);line-height:1.1;margin:0 0 24px;letter-spacing:-0.01em}
+  .closing h2 em{font-style:italic;color:var(--accent)}
+  .closing p{font-size:16px;color:var(--mute);max-width:520px;margin:0 auto 8px}
+  .closing .sig{margin-top:48px;font:500 11px var(--mono);letter-spacing:0.18em;text-transform:uppercase;color:var(--mute-2)}
+
+  /* Section anchors offset */
+  section[id]{scroll-margin-top:24px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="top">
+    <div class="logo">AIVFX <span style="color:var(--mute);font-weight:400">/ концепт-документ</span></div>
+    <div class="micro">для NL · CellCode · 2026-05</div>
+  </div>
+  <div class="wrap">
+    <h1>Время<br/><em>на твоей стороне.</em></h1>
+    <div class="subline">
+      <p class="descr">
+        Три направления для съёмки 20 кадров с моделями и продуктом CellCode.
+        Все три развивают платформу клиента «Время на твоей стороне», но идут к ней разными путями —
+        через геометрию, через свет в воде или через утреннюю рутину пары.
+      </p>
+      <div class="meta">
+        <b>CellCode · NL</b>
+        Пептидный anti-age напиток<br/>
+        20 кадров · 9:16 + ресайз 4:5 / 5:4<br/>
+        Подготовлено: AIVFX
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="brief">
+  <div class="wrap">
+    <h2>Что мы поняли из брифа</h2>
+    <div class="brief-grid">
+      <div class="brief-text">
+        <p>
+          CellCode — премиальный пептидный напиток, который работает на уровне клеток.
+          Слоган «Включи код жизни», на упаковке — золотая спираль, груши и белый цветок на тёмно-зелёном фоне.
+        </p>
+        <p>
+          Главная коммуникативная идея — переворот в отношениях со временем.
+          Не борьба со старением, а контроль состояния.
+        </p>
+        <div class="quote">
+          Обычная модель: время = давление → старение → усталость.<br/>
+          Новая модель: время = ресурс → восстановление → обновление.
+        </div>
+        <p>
+          Поэтому в каждом из трёх концептов мы держим один и тот же тон —
+          <b>спокойная уверенность, тихая сила, интеллектуальный премиум</b> —
+          и одну и ту же палитру — тёплый бежевый, кремовый, off-white, золото.
+          Меняется только визуальная метафора времени, через которую кадр рассказывает идею.
+        </p>
+        <div class="pill-row">
+          <span class="pill">20 кадров</span>
+          <span class="pill">парень + девушка, славянская внешность 35–45</span>
+          <span class="pill">несколько локаций</span>
+          <span class="pill">обязательное взаимодействие с продуктом</span>
+          <span class="pill">9:16 → ресайз 4:5 / 5:4</span>
+        </div>
+      </div>
+      <div class="brief-aside">
+        <img src="assets/brief_product.jpg" alt="CellCode упаковка из брифа клиента" loading="lazy" />
+        <img src="assets/brief_mood1.jpg" alt="Мудборд из креативной рамки клиента, лист 1" loading="lazy" />
+        <img src="assets/brief_mood2.jpg" alt="Мудборд из креативной рамки клиента, лист 2" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CONCEPT A ====== -->
+<section class="concept" id="concept-a">
+  <div class="wrap">
+    <div class="concept-header">
+      <p class="num">A</p>
+      <div class="name">
+        <span class="tag">Концепт A · 17 референсов</span>
+        <h2>Золотое <i>сечение</i>.</h2>
+      </div>
+      <div></div>
+    </div>
+
+    <div class="concept-meta">
+      <div class="col"><h4>Идея</h4><p>Спираль с упаковки — визуальный код всего проекта. Время как виток.</p></div>
+      <div class="col"><h4>Тон</h4><p>Графичный, тихий, точный. Премиум через геометрию.</p></div>
+      <div class="col"><h4>Палитра</h4><p>Тёплый бежевый, off-white, золото / золотистая бронза, молочный жемчуг.</p></div>
+      <div class="col"><h4>Локации</h4><p>Светлая студия с песочным фоном · минимал-интерьер с большими окнами · ракушечный берег.</p></div>
+    </div>
+
+    <div class="concept-body">
+      <div>
+        <h3>Что выделяет</h3>
+        <p>Прямой визуальный link с упаковкой CellCode: спираль повторяется в композиции, в тенях, в объектах. Самая «архитектурная» подача из трёх — кадры выживают в любом ресайзе.</p>
+        <p>Гардероб: шёлк, лён, кашемир кремового и песочного. Декор: раковина наутилуса, золотое кольцо, прозрачный стакан, песочные часы (опционально), белые лепестки.</p>
+      </div>
+      <div class="shots">
+        <h3>Ключевые кадры</h3>
+        <ol>
+          <li><b>Hero</b>Девушка в шёлковом кремовом, в профиль, держит коробку CellCode у груди. На стене — мягкая тень в форме спирали. Тёплый утренний свет.</li>
+          <li><b>Взаимодействие</b>Крупно: руки женщины пересыпают саше CellCode в прозрачный стакан, порошок закручивается в кадре золотой спиралью.</li>
+          <li><b>Мужчина-портрет</b>Мужчина 40+, лён цвета слоновой кости, в руках раковина наутилуса. CellCode на столе на переднем плане в расфокусе.</li>
+          <li><b>Пара</b>Пара на полу у большого окна, между ними коробка CellCode. Расслабленные позы.</li>
+          <li><b>Текстура</b>Спираль из светлого песка, в центре — саше CellCode. Без модели. Атмосферный кадр для SMM-карусели.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="moodboard">
+      <div class="label"><span class="micro">Мудборд</span><h3>Концепт A · референсы</h3></div>
+      <div class="grid" id="grid-a"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CONCEPT B ====== -->
+<section class="concept" id="concept-b">
+  <div class="wrap">
+    <div class="concept-header">
+      <p class="num">B</p>
+      <div class="name">
+        <span class="tag">Концепт B · 19 референсов</span>
+        <h2>Текучесть <i>времени</i>.</h2>
+      </div>
+      <div></div>
+    </div>
+
+    <div class="concept-meta">
+      <div class="col"><h4>Идея</h4><p>Вода и стекло — время как прозрачная среда. Капля, блик, преломление. Продукт — точка спокойствия.</p></div>
+      <div class="col"><h4>Тон</h4><p>Чувственный, дышащий, кинематографичный. Свет — главный герой.</p></div>
+      <div class="col"><h4>Палитра</h4><p>Тёплый off-white, жемчужный, золото в бликах, прозрачное стекло, серебристый перламутр.</p></div>
+      <div class="col"><h4>Локации</h4><p>Спа-интерьер с тёплым бассейном · светлая комната с водой на полу · берег моря на закате.</p></div>
+    </div>
+
+    <div class="concept-body">
+      <div>
+        <h3>Что выделяет</h3>
+        <p>Буквально реализует тезис «преломление времени» из креативной рамки клиента. Самая кинематографичная подача — даёт «дорогую» картинку без видимого продакшен-усилия.</p>
+        <p>Естественно встраивает взаимодействие с продуктом — стакан с водой и саше тут на месте. Гардероб: шёлковые комбинации, льняной халат, белая oversize-рубашка.</p>
+      </div>
+      <div class="shots">
+        <h3>Ключевые кадры</h3>
+        <ol>
+          <li><b>Hero</b>Девушка стоит по щиколотку в тёплой воде у большого окна, в шёлковой слип-комбинации. В руках коробка CellCode. Контражурный свет, блики на коже.</li>
+          <li><b>Взаимодействие крупно</b>Момент, когда саше CellCode встречается с водой в хрустальном стакане. Порошок только начинает растворяться, золотой блик скользит по стеклу.</li>
+          <li><b>Мужчина в воде</b>Мужчина 40+ в льняной рубашке у кромки воды на закате. В руке стакан с CellCode. Не позирует — смотрит на воду.</li>
+          <li><b>Пара</b>Отражение пары в плоской воде на наливном полу. Между ними — коробка CellCode. Спокойные нерепортажные позы.</li>
+          <li><b>Макро без модели</b>Капля воды падает рядом с саше CellCode, в каплю попадает золотой блик. Идеальный SMM-кадр.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="moodboard">
+      <div class="label"><span class="micro">Мудборд</span><h3>Концепт B · референсы</h3></div>
+      <div class="grid" id="grid-b"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CONCEPT C ====== -->
+<section class="concept" id="concept-c">
+  <div class="wrap">
+    <div class="concept-header">
+      <p class="num">C</p>
+      <div class="name">
+        <span class="tag">Концепт C · 14 референсов</span>
+        <h2>Бутон <i>→ цветок</i>.</h2>
+      </div>
+      <div></div>
+    </div>
+
+    <div class="concept-meta">
+      <div class="col"><h4>Идея</h4><p>Естественный рост и обновление. Утро, оранжерея, природный свет. Время как развитие, не давление.</p></div>
+      <div class="col"><h4>Тон</h4><p>Тёплый, человечный, lifestyle-документальный. Минимум постановки, максимум естественности.</p></div>
+      <div class="col"><h4>Палитра</h4><p>Молочный белый, лён, бледно-зелёный и оливковый, тёплый бежевый. Золото — только в свете.</p></div>
+      <div class="col"><h4>Локации</h4><p>Оранжерея / зимний сад · загородный дом со стеклянной стеной · цветущий грушевый сад на рассвете.</p></div>
+    </div>
+
+    <div class="concept-body">
+      <div>
+        <h3>Что выделяет</h3>
+        <p>Прямая визуальная рифма с упаковкой CellCode: груши + белый цветок на коробке = пейзаж концепта. Самая «безопасная» по восприятию подача — широкая аудитория, легко продаётся, легко делается.</p>
+        <p>Возраст 35–45 органично читается в lifestyle. Гардероб: лён, тонкий хлопок, кашемир. Декор: грушевые ветки, белые цветы (фрезии, гипсофила), керамика, лён.</p>
+      </div>
+      <div class="shots">
+        <h3>Ключевые кадры</h3>
+        <ol>
+          <li><b>Hero</b>Пара на кухне в загородном доме на рассвете. Девушка пересыпает CellCode в стакан, мужчина смотрит в окно. На столе груши и белые цветы.</li>
+          <li><b>Девушка в оранжерее</b>Девушка 38–42 в кремовом льняном костюме, среди белых фрезий и грушевых веток, в руке коробка CellCode. Естественная улыбка, без позы.</li>
+          <li><b>Мужчина в саду</b>Мужчина 42 в белой рубашке, утро в цветущем грушевом саду, в руке стакан с CellCode. Лёгкий туман, золотой контражур.</li>
+          <li><b>Макро упаковки</b>Коробка CellCode на льне, рядом ветка груши и белый цветок (повторяет дизайн упаковки — meta-кадр).</li>
+          <li><b>Парный портрет</b>Пара пьёт CellCode стоя у стеклянной стены, видно сад. Главное — атмосфера, в которой продукт естественен.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="moodboard">
+      <div class="label"><span class="micro">Мудборд</span><h3>Концепт C · референсы</h3></div>
+      <div class="grid" id="grid-c"></div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <h2>Какое <em>направление</em> двигаем дальше?</h2>
+    <p>Можно выбрать одно или зафиксировать гибрид: например, основная серия в одной концепции, 4–6 кадров — в другой.</p>
+    <p>После выбора фиксируем образы моделей, локации и палитру, потом переходим к производству финальных 20 кадров.</p>
+    <div class="sig">AIVFX · 2026 · по запросу NL</div>
+  </div>
+</section>
+
+<script>
+  const A=["a_01","a_02","a_03","a_04","a_05","a_08","a_09","a_11","a_12","a_14","a_15","a_16","a_17","a_19","a_20","a_25","a_31"];
+  const B=["b_01","b_02","b_03","b_04","b_05","b_07","b_08","b_09","b_10","b_11","b_13","b_14","b_15","b_16","b_18","b_19","b_20","b_21","b_22"];
+  const C=["c_01","c_02","c_03","c_04","c_05","c_06","c_07","c_08","c_09","c_10","c_12","c_13","c_15","c_16"];
+  function fill(id, list){
+    const g=document.getElementById(id);
+    list.forEach(name=>{
+      const t=document.createElement('div'); t.className='tile';
+      const img=document.createElement('img'); img.loading='lazy'; img.src=`assets/refs/${name}.jpg`; img.alt=`Reference ${name}`;
+      t.appendChild(img); g.appendChild(t);
+    });
+  }
+  fill('grid-a', A); fill('grid-b', B); fill('grid-c', C);
+</script>
+</body>
+</html>

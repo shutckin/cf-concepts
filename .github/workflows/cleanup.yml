@@ -1,0 +1,64 @@
+name: Auto-cleanup old concepts
+
+on:
+  schedule:
+    # Каждый день в 03:00 UTC (06:00 по Москве)
+    - cron: "0 3 * * *"
+  workflow_dispatch: # Можно запустить вручную из Actions UI
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Нужна полная история, чтобы знать дату создания папок
+
+      - name: Remove concept folders older than 30 days
+        run: |
+          set -e
+          REMOVED=0
+          # Перебираем все папки в docs/, кроме самого docs/
+          for dir in docs/*/; do
+            [ -d "$dir" ] || continue
+            folder_name=$(basename "$dir")
+
+            # Получаем дату первого коммита, добавившего файл в этой папке
+            first_commit_date=$(git log --diff-filter=A --format="%aI" -- "$dir" | tail -1)
+
+            if [ -z "$first_commit_date" ]; then
+              echo "Skipping $folder_name (no commit history found)"
+              continue
+            fi
+
+            # Возраст папки в днях
+            now_ts=$(date -u +%s)
+            created_ts=$(date -u -d "$first_commit_date" +%s 2>/dev/null || date -u -j -f "%Y-%m-%dT%H:%M:%S%z" "${first_commit_date%:*}${first_commit_date##*:}" +%s 2>/dev/null || echo 0)
+            if [ "$created_ts" = "0" ]; then
+              echo "Cannot parse date for $folder_name: $first_commit_date"
+              continue
+            fi
+            age_days=$(( (now_ts - created_ts) / 86400 ))
+
+            if [ "$age_days" -gt 30 ]; then
+              echo "Removing $folder_name (age: $age_days days)"
+              git rm -rf "$dir"
+              REMOVED=$((REMOVED + 1))
+            else
+              echo "Keeping $folder_name (age: $age_days days)"
+            fi
+          done
+
+          echo "REMOVED=$REMOVED" >> $GITHUB_ENV
+
+      - name: Commit and push if anything was removed
+        if: env.REMOVED != '0'
+        run: |
+          git config user.name "cf-concepts-bot"
+          git config user.email "actions@github.com"
+          git commit -m "chore: auto-cleanup ${REMOVED} concept folder(s) older than 30 days"
+          git push

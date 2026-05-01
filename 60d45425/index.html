@@ -583,6 +583,117 @@ em{font-style:normal}
   text-transform:uppercase;color:var(--mute-2);
 }
 
+/* Concept CTA — внутри каждой зоны */
+.concept-cta{
+  margin-top:clamp(2rem,4vw,3.5rem);
+  padding:clamp(1.6rem,3vw,2.4rem) clamp(1.8rem,3.2vw,2.8rem);
+  border:1px solid var(--line);
+  background:var(--bg);
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:clamp(1rem,2vw,2rem);
+  align-items:center;
+}
+@media (max-width:760px){.concept-cta{grid-template-columns:1fr}}
+.concept-cta .cta-text h4{
+  font-family:var(--font-d);font-weight:600;
+  font-size:clamp(1.2rem,1.8vw,1.5rem);
+  line-height:1.15;letter-spacing:-.015em;
+  color:var(--ink);margin:0 0 .4rem;
+}
+.concept-cta .cta-text p{
+  font-size:.95rem;line-height:1.5;color:var(--mute);margin:0;max-width:48ch;
+}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:.7rem;
+  padding:14px 26px;
+  font-family:var(--font-m);font-size:.78rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;color:var(--bg);
+  border:none;border-radius:0;
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease);
+  white-space:nowrap;
+}
+.cta-btn .arrow{font-family:var(--font-d);font-size:1.15em;font-weight:300;transition:transform .35s var(--ease)}
+.cta-btn:hover{transform:translateY(-2px)}
+.cta-btn:hover .arrow{transform:translateX(4px)}
+.zone-a .cta-btn{background:var(--acc-a);box-shadow:0 4px 18px rgba(181,138,78,.25)}
+.zone-a .cta-btn:hover{box-shadow:0 8px 28px rgba(181,138,78,.35)}
+.zone-b .cta-btn{background:var(--acc-b);box-shadow:0 4px 18px rgba(110,152,199,.25)}
+.zone-b .cta-btn:hover{box-shadow:0 8px 28px rgba(110,152,199,.35)}
+.zone-c .cta-btn{background:var(--acc-c);box-shadow:0 4px 18px rgba(122,138,78,.25)}
+.zone-c .cta-btn:hover{box-shadow:0 8px 28px rgba(122,138,78,.35)}
+
+/* Final pick block */
+.pick{padding:clamp(5rem,8vw,8rem) 0 clamp(3rem,5vw,5rem)}
+.pick .top{
+  text-align:center;margin-bottom:clamp(2.5rem,4vw,4rem);
+}
+.pick h2{
+  font-family:var(--font-d);font-weight:600;
+  font-size:clamp(2.4rem,5vw,4.5rem);line-height:1;letter-spacing:-.035em;
+  margin-bottom:1rem;color:var(--ink);
+}
+.pick h2 em{font-style:italic;font-weight:400;color:var(--acc-a)}
+.pick .top p{font-size:1.05rem;color:var(--ink-2);max-width:56ch;margin:0 auto;line-height:1.55}
+.pick-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
+  max-width:1100px;margin:0 auto;
+}
+@media (max-width:880px){.pick-grid{grid-template-columns:1fr}}
+.pick-card{
+  display:flex;flex-direction:column;
+  padding:clamp(1.6rem,2.6vw,2.2rem);
+  background:var(--bg-2);
+  border:1px solid var(--line);
+  text-decoration:none;color:var(--ink);
+  transition:transform .5s var(--ease),border-color .5s var(--ease),background .5s var(--ease);
+  min-height:240px;
+}
+.pick-card:hover{transform:translateY(-4px)}
+.pick-card[data-c="a"]:hover{border-color:var(--acc-a);background:var(--bg-tint-a)}
+.pick-card[data-c="b"]:hover{border-color:var(--acc-b);background:var(--bg-tint-b)}
+.pick-card[data-c="c"]:hover{border-color:var(--acc-c);background:var(--bg-tint-c)}
+.pick-card .lbl{
+  font-family:var(--font-m);font-size:.7rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--mute-3);margin-bottom:.7rem;
+}
+.pick-card[data-c="a"] .lbl{color:var(--acc-a)}
+.pick-card[data-c="b"] .lbl{color:var(--acc-b)}
+.pick-card[data-c="c"] .lbl{color:var(--acc-c)}
+.pick-card h3{
+  font-family:var(--font-d);font-weight:600;
+  font-size:clamp(1.5rem,2.4vw,1.95rem);line-height:1.05;letter-spacing:-.02em;
+  margin-bottom:.6rem;
+}
+.pick-card h3 em{font-style:italic;font-weight:400}
+.pick-card[data-c="a"] h3 em{color:var(--acc-a)}
+.pick-card[data-c="b"] h3 em{color:var(--acc-b)}
+.pick-card[data-c="c"] h3 em{color:var(--acc-c)}
+.pick-card p{color:var(--mute);font-size:.92rem;line-height:1.5;margin-bottom:auto;padding-bottom:1.4rem}
+.pick-card .pick-btn{
+  display:inline-flex;align-items:center;justify-content:space-between;
+  padding:.85rem 1.1rem;
+  font-family:var(--font-m);font-size:.74rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--ink);
+  background:var(--ink);color:var(--bg);
+  transition:transform .35s var(--ease);
+}
+.pick-card[data-c="a"] .pick-btn{background:var(--acc-a);border-color:var(--acc-a)}
+.pick-card[data-c="b"] .pick-btn{background:var(--acc-b);border-color:var(--acc-b)}
+.pick-card[data-c="c"] .pick-btn{background:var(--acc-c);border-color:var(--acc-c)}
+.pick-card:hover .pick-btn{transform:translateX(3px)}
+
+.pick-foot{
+  margin-top:clamp(3rem,5vw,4rem);
+  text-align:center;
+  font:500 12px/1.7 var(--font-m);
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--mute-2);
+}
+.pick-foot a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
+
 /* Reveal on scroll */
 [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
 [data-reveal].is-visible{opacity:1;transform:none}
@@ -620,7 +731,7 @@ section[id]{scroll-margin-top:80px}
       <div class="concept-picker">
         <a class="pick-card" data-c="a" href="#concept-a">
           <div>
-            <p class="num">Концепт A · 17 рефов</p>
+            <p class="num">Концепт A · 11 кадров</p>
             <h3>Золотое <em>сечение</em>.</h3>
             <p>Спираль с упаковки — визуальный код всего проекта. Время как виток.</p>
           </div>
@@ -628,7 +739,7 @@ section[id]{scroll-margin-top:80px}
         </a>
         <a class="pick-card" data-c="b" href="#concept-b">
           <div>
-            <p class="num">Концепт B · 19 рефов</p>
+            <p class="num">Концепт B · 11 кадров</p>
             <h3>Текучесть <em>времени</em>.</h3>
             <p>Вода и стекло — время как прозрачная среда. Капля, блик, преломление.</p>
           </div>
@@ -636,7 +747,7 @@ section[id]{scroll-margin-top:80px}
         </a>
         <a class="pick-card" data-c="c" href="#concept-c">
           <div>
-            <p class="num">Концепт C · 14 рефов</p>
+            <p class="num">Концепт C · 11 кадров</p>
             <h3>Бутон <em>→ цветок</em>.</h3>
             <p>Естественный рост, оранжерея, утро. Время как развитие, не давление.</p>
           </div>
@@ -735,7 +846,7 @@ section[id]{scroll-margin-top:80px}
     <div class="divider">
       <div class="num-bg">A</div>
       <div class="center" data-reveal>
-        <div class="label">Концепт A · 17 референсов</div>
+        <div class="label">Концепт A · 11 кадров</div>
         <h2>Золотое <em>сечение</em>.</h2>
         <p class="tagline">
           Спираль с упаковки CellCode становится визуальным кодом всего проекта.
@@ -815,9 +926,17 @@ section[id]{scroll-margin-top:80px}
           <div class="block-content">
             <div class="moodboard-head">
               <h3>Мудборд</h3>
-              <div class="count">17 референсов</div>
+              <div class="count">11 кадров</div>
             </div>
             <div class="bento" id="bento-a"></div>
+
+            <div class="concept-cta" data-reveal>
+              <div class="cta-text">
+                <h4>Этот концепт нравится?</h4>
+                <p>Жми кнопку — откроется мой Telegram с готовым началом сообщения. Допиши комментарий и отправь.</p>
+              </div>
+              <a class="cta-btn" target="_blank" rel="noopener" data-tg="a">Обсудить концепт A <span class="arrow">→</span></a>
+            </div>
           </div>
         </div>
       </section>
@@ -829,7 +948,7 @@ section[id]{scroll-margin-top:80px}
     <div class="divider">
       <div class="num-bg">B</div>
       <div class="center" data-reveal>
-        <div class="label">Концепт B · 19 референсов</div>
+        <div class="label">Концепт B · 11 кадров</div>
         <h2>Текучесть <em>времени</em>.</h2>
         <p class="tagline">
           Вода и стекло — время как прозрачная среда, в которой всё пластично.
@@ -909,9 +1028,17 @@ section[id]{scroll-margin-top:80px}
           <div class="block-content">
             <div class="moodboard-head">
               <h3>Мудборд</h3>
-              <div class="count">19 референсов</div>
+              <div class="count">11 кадров</div>
             </div>
             <div class="bento" id="bento-b"></div>
+
+            <div class="concept-cta" data-reveal>
+              <div class="cta-text">
+                <h4>Этот концепт нравится?</h4>
+                <p>Жми кнопку — откроется мой Telegram с готовым началом сообщения. Допиши комментарий и отправь.</p>
+              </div>
+              <a class="cta-btn" target="_blank" rel="noopener" data-tg="b">Обсудить концепт B <span class="arrow">→</span></a>
+            </div>
           </div>
         </div>
       </section>
@@ -923,7 +1050,7 @@ section[id]{scroll-margin-top:80px}
     <div class="divider">
       <div class="num-bg">C</div>
       <div class="center" data-reveal>
-        <div class="label">Концепт C · 14 референсов</div>
+        <div class="label">Концепт C · 11 кадров</div>
         <h2>Бутон <em>→ цветок</em>.</h2>
         <p class="tagline">
           Естественный рост и обновление. Утро, оранжерея, природный свет.
@@ -1003,22 +1130,55 @@ section[id]{scroll-margin-top:80px}
           <div class="block-content">
             <div class="moodboard-head">
               <h3>Мудборд</h3>
-              <div class="count">14 референсов</div>
+              <div class="count">11 кадров</div>
             </div>
             <div class="bento" id="bento-c"></div>
+
+            <div class="concept-cta" data-reveal>
+              <div class="cta-text">
+                <h4>Этот концепт нравится?</h4>
+                <p>Жми кнопку — откроется мой Telegram с готовым началом сообщения. Допиши комментарий и отправь.</p>
+              </div>
+              <a class="cta-btn" target="_blank" rel="noopener" data-tg="c">Обсудить концепт C <span class="arrow">→</span></a>
+            </div>
           </div>
         </div>
       </section>
     </div>
   </section>
 
-  <!-- CLOSING -->
-  <section class="closing">
+  <!-- FINAL PICK -->
+  <section class="pick">
     <div class="container">
-      <h2>Какое <em>направление</em><br/>двигаем дальше?</h2>
-      <p>Можно выбрать одно или зафиксировать гибрид: основная серия в одной концепции, 4–6 кадров — в другой.</p>
-      <p>После выбора — фиксируем образы моделей, локации и палитру, потом переходим к производству финальных 20 кадров.</p>
-      <div class="sig">AIVFX · 2026 · по запросу NL</div>
+      <div class="top" data-reveal>
+        <h2>Какое <em>направление</em><br/>двигаем дальше?</h2>
+        <p>Выбери концепт — кнопка откроет мой Telegram с готовым началом сообщения. Допиши комментарий и отправь. Гибрид (одна основная серия + 4–6 кадров из другого концепта) — тоже валидный вариант, напиши об этом в комментарии.</p>
+      </div>
+
+      <div class="pick-grid" data-reveal>
+        <a class="pick-card" data-c="a" target="_blank" rel="noopener" data-tg="a">
+          <div class="lbl">Концепт A</div>
+          <h3>Золотое <em>сечение</em>.</h3>
+          <p>Спираль с упаковки — визуальный код всего проекта. Время как виток.</p>
+          <span class="pick-btn">Выбрать A <span>→</span></span>
+        </a>
+        <a class="pick-card" data-c="b" target="_blank" rel="noopener" data-tg="b">
+          <div class="lbl">Концепт B</div>
+          <h3>Текучесть <em>времени</em>.</h3>
+          <p>Вода и стекло. Капля, блик, преломление. Продукт — точка спокойствия в потоке.</p>
+          <span class="pick-btn">Выбрать B <span>→</span></span>
+        </a>
+        <a class="pick-card" data-c="c" target="_blank" rel="noopener" data-tg="c">
+          <div class="lbl">Концепт C</div>
+          <h3>Бутон <em>→ цветок</em>.</h3>
+          <p>Естественный рост, оранжерея, утро. Время как развитие, не давление.</p>
+          <span class="pick-btn">Выбрать C <span>→</span></span>
+        </a>
+      </div>
+
+      <div class="pick-foot">
+        AIVFX · 2026 · подготовлено для NL · связь: <a href="https://t.me/djiyvlom" target="_blank" rel="noopener">@djiyvlom</a>
+      </div>
     </div>
   </section>
 
@@ -1046,10 +1206,12 @@ section[id]{scroll-margin-top:80px}
   })();
 
   /* === Bento moodboards === */
+  /* Тематические рефы (буквальные иллюстрации концепта) перемежаются с lifestyle-кадрами,
+     чтобы мудборд читался как нарратив, а не как «сетка из красивых моделей». */
   const refs={
-    a:["a_01","a_02","a_03","a_04","a_05","a_08","a_09","a_11","a_12","a_14","a_15","a_16","a_17","a_19","a_20","a_25","a_31"],
-    b:["b_01","b_02","b_03","b_04","b_05","b_07","b_08","b_09","b_10","b_11","b_13","b_14","b_15","b_16","b_18","b_19","b_20","b_21","b_22"],
-    c:["c_01","c_02","c_03","c_04","c_05","c_06","c_07","c_08","c_09","c_10","c_12","c_13","c_15","c_16"]
+    a:["at_05","a_01","at_19","a_03","at_22","a_05","at_25","a_09","at_30","a_25","at_28"],
+    b:["bt_04","b_02","bt_14","b_01","bt_28","b_03","bt_19","b_14","bt_31","b_19","bt_35"],
+    c:["ct_12","c_01","ct_06","c_03","ct_25","c_04","ct_08","c_07","ct_40","c_09","ct_01"]
   };
   Object.entries(refs).forEach(([k,arr])=>{
     const g=document.getElementById('bento-'+k); if(!g) return;
@@ -1059,6 +1221,22 @@ section[id]{scroll-margin-top:80px}
       t.appendChild(img); g.appendChild(t);
     });
   });
+
+  /* === Telegram CTA — prefilled message per concept === */
+  (function(){
+    const titles={
+      a:'Золотое сечение',
+      b:'Текучесть времени',
+      c:'Бутон → цветок'
+    };
+    const tgUser='djiyvlom';
+    document.querySelectorAll('[data-tg]').forEach(el=>{
+      const k=el.dataset.tg;
+      const title=titles[k]||'';
+      const msg=`Здравствуйте, Артём! По проекту CellCode — выбираю Концепт ${k.toUpperCase()} «${title}». Комментарий: `;
+      el.href=`https://t.me/${tgUser}?text=${encodeURIComponent(msg)}`;
+    });
+  })();
 
   /* === Active concept tracker (changes accent across body) === */
   const zones=[...document.querySelectorAll('.zone[data-zone]')];

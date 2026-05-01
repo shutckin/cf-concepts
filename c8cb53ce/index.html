@@ -119,14 +119,21 @@
         backdrop-filter: blur(8px);
         border-bottom: 1px solid var(--line);
       }
-      .topbar .brand { color: var(--ink); font-weight: 500; font-size: 0.9rem; }
-      .topbar .brand .dot {
-        display: inline-block;
-        width: 6px; height: 6px;
-        border-radius: 50%;
-        background: var(--accent);
-        margin-right: 8px;
-        vertical-align: 2px;
+      .topbar .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: var(--ink);
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.05rem;
+        letter-spacing: -0.01em;
+        text-transform: none;
+      }
+      .topbar .brand img {
+        width: 28px;
+        height: 28px;
+        display: block;
       }
       .nav { display: flex; gap: 1.5rem; align-items: center; }
       .nav a {
@@ -825,11 +832,31 @@
         color: var(--mute-3);
         display: flex;
         justify-content: space-between;
+        align-items: center;
         flex-wrap: wrap;
         gap: 1rem;
       }
       footer a { color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
       footer a:hover { color: var(--accent); }
+      footer .footer-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        text-transform: none;
+        letter-spacing: 0;
+        font-family: var(--font-display);
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      footer .footer-brand img {
+        width: 26px;
+        height: 26px;
+      }
+      footer .footer-meta {
+        display: flex;
+        gap: 1.5rem;
+      }
 
       .reveal {
         opacity: 0;
@@ -853,7 +880,10 @@
     <div class="cursor-ring" id="cursorRing"></div>
 
     <div class="topbar">
-      <div class="brand" data-hover><span class="dot"></span>AIVFX</div>
+      <a href="https://aivfx.ru" target="_blank" rel="noopener" class="brand" data-hover>
+        <img src="../assets/aivfx-logo.png" alt="AIVFX" />
+        <span>AIVFX</span>
+      </a>
       <nav class="nav">
         <a href="#concept-a-section" data-section="a" data-hover>Концепт A</a>
         <a href="#concept-b-section" data-section="b" data-hover>Концепт B</a>
@@ -1657,8 +1687,13 @@
       </section>
 
       <footer>
-        <div>AIVFX · <a href="https://aivfx.ru" data-hover>aivfx.ru</a></div>
-        <div>Concept #c8cb53ce · 2026</div>
+        <a href="https://aivfx.ru" target="_blank" rel="noopener" class="footer-brand" data-hover>
+          <img src="../assets/aivfx-logo.png" alt="AIVFX" />
+          <span>aivfx.ru</span>
+        </a>
+        <div class="footer-meta">
+          <span>Концепт действителен 30 дней</span>
+        </div>
       </footer>
     </div>
 

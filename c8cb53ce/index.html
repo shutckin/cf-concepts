@@ -309,39 +309,124 @@
         to { transform: translateX(-50%); }
       }
 
-      /* Concept divider */
-      .concept-divider {
-        padding: clamp(5rem, 10vw, 9rem) 0 clamp(2rem, 4vw, 3rem);
-        border-top: 1px solid var(--line);
+      /* === Concept ZONES (full bleed, tinted backgrounds) === */
+      .concept-zone {
+        position: relative;
+        width: 100%;
       }
-      .concept-divider .label {
-        font-family: var(--font-mono);
-        font-size: 0.78rem;
-        text-transform: uppercase;
-        letter-spacing: 0.22em;
-        margin-bottom: 1.25rem;
-        display: flex;
-        align-items: center;
-        gap: 0.85rem;
+      .concept-zone.zone-a {
+        background:
+          radial-gradient(ellipse at 50% 0%, rgba(240, 165, 0, 0.04) 0%, transparent 60%),
+          linear-gradient(180deg, var(--bg) 0%, #14110d 15%, #14110d 85%, var(--bg) 100%);
+        border-top: 1px solid rgba(240, 165, 0, 0.18);
+        border-bottom: 1px solid rgba(240, 165, 0, 0.18);
       }
-      .concept-divider .label::before {
-        content: "";
-        width: 32px; height: 1px;
+      .concept-zone.zone-b {
+        background:
+          radial-gradient(ellipse at 50% 0%, rgba(110, 168, 199, 0.05) 0%, transparent 60%),
+          linear-gradient(180deg, var(--bg) 0%, #0d1116 15%, #0d1116 85%, var(--bg) 100%);
+        border-top: 1px solid rgba(110, 168, 199, 0.2);
+        border-bottom: 1px solid rgba(110, 168, 199, 0.2);
       }
-      #concept-a-section .label { color: var(--accent); }
-      #concept-a-section .label::before { background: var(--accent); }
-      #concept-b-section .label { color: var(--accent-cool); }
-      #concept-b-section .label::before { background: var(--accent-cool); }
-      .concept-divider h2 {
+
+      /* Big 100vh dividers with huge background number */
+      .zone-divider {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        position: relative;
+        overflow: hidden;
+        padding: 0 clamp(1rem, 4vw, 2rem);
+      }
+      .zone-divider .num-bg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         font-family: var(--font-display);
-        font-size: clamp(2.6rem, 8vw, 7rem);
+        font-size: clamp(20rem, 55vw, 60rem);
+        font-weight: 200;
+        line-height: 0.78;
+        letter-spacing: -0.06em;
+        user-select: none;
+        pointer-events: none;
+        z-index: 1;
+        white-space: nowrap;
+      }
+      .zone-a .zone-divider .num-bg { color: rgba(240, 165, 0, 0.06); }
+      .zone-b .zone-divider .num-bg { color: rgba(110, 168, 199, 0.07); }
+      .zone-divider .center {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 900px;
+      }
+      .zone-divider .label {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        margin-bottom: 1.75rem;
+        font-weight: 500;
+      }
+      .zone-a .zone-divider .label { color: var(--accent); }
+      .zone-b .zone-divider .label { color: var(--accent-cool); }
+      .zone-divider h2 {
+        font-family: var(--font-display);
+        font-size: clamp(2.8rem, 8vw, 7rem);
         font-weight: 700;
         line-height: 0.95;
         letter-spacing: -0.035em;
+        margin: 0 auto 2rem;
         max-width: 14ch;
+        color: var(--ink);
       }
-      #concept-a-section h2 em { color: var(--accent); font-style: italic; font-weight: 400; }
-      #concept-b-section h2 em { color: var(--accent-cool); font-style: italic; font-weight: 400; }
+      .zone-a .zone-divider h2 em { color: var(--accent); font-style: italic; font-weight: 400; }
+      .zone-b .zone-divider h2 em { color: var(--accent-cool); font-style: italic; font-weight: 400; }
+      .zone-divider .tagline {
+        font-family: var(--font-display);
+        font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+        font-weight: 300;
+        color: var(--mute);
+        max-width: 50ch;
+        margin: 0 auto 3rem;
+        line-height: 1.5;
+      }
+      .zone-divider .scroll-hint {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+      .zone-divider .scroll-hint::after {
+        content: "↓";
+        font-size: 1.25em;
+        animation: bob 1.6s ease-in-out infinite;
+      }
+      @keyframes bob {
+        0%, 100% { transform: translateY(0); opacity: 0.6; }
+        50% { transform: translateY(8px); opacity: 1; }
+      }
+      .zone-content {
+        padding-top: clamp(2rem, 4vw, 4rem);
+        padding-bottom: clamp(4rem, 8vw, 7rem);
+      }
+
+      /* Active nav pill */
+      .nav a.active {
+        color: var(--ink);
+        background: rgba(240, 165, 0, 0.12);
+        padding: 0.4rem 0.85rem;
+        border-radius: 999px;
+      }
+      body[data-active-concept="b"] .nav a.active {
+        background: rgba(110, 168, 199, 0.14);
+      }
+      .nav a.active::after { display: none; }
 
       section.block {
         padding: clamp(3rem, 6vw, 5rem) 0;
@@ -773,7 +858,7 @@
     <div class="container">
       <header class="hero">
         <div>
-          <div class="hero-kicker reveal">Концепт · Aurum Coffee</div>
+          <div class="hero-kicker reveal">Концепт · Социальная реклама · 9:16</div>
           <h1>
             <span class="reveal-line"><span>Утро,</span></span>
             <span class="reveal-line"><span>две <em>энергии</em>.</span></span>
@@ -838,11 +923,18 @@
     </div>
 
     <!-- ========== КОНЦЕПТ A ========== -->
-    <div class="container" id="concept-a-section">
-      <div class="concept-divider">
-        <div class="label">Концепт A · Медитативный</div>
-        <h2>Тишина, потом — <em>звук</em></h2>
+    <section class="concept-zone zone-a" id="concept-a-section">
+      <div class="zone-divider">
+        <div class="num-bg" aria-hidden="true">01</div>
+        <div class="center reveal">
+          <div class="label">Концепт A · Медитативный</div>
+          <h2>Тишина, потом — <em>звук</em></h2>
+          <p class="tagline">Контраст беззвучия и резкого «щелчка» эспрессо-машины. Камера как наблюдатель, а не участник.</p>
+          <div class="scroll-hint">Прокрутите ниже</div>
+        </div>
       </div>
+      <div class="zone-content">
+        <div class="container">
 
       <section class="block reveal">
         <div class="block-grid">
@@ -942,7 +1034,7 @@
                 <div class="frame"></div>
                 <div class="body">
                   <div class="timecode">00:13 — 00:15</div>
-                  <div class="desc">Логотип, слоган: «Утро звучит по-другому».</div>
+                  <div class="desc">Логотип бренда, слоган: «Утро звучит по-другому».</div>
                 </div>
               </div>
             </div>
@@ -1137,14 +1229,23 @@
           </div>
         </div>
       </section>
-    </div>
+        </div>
+      </div>
+    </section>
 
     <!-- ========== КОНЦЕПТ B ========== -->
-    <div class="container" id="concept-b-section">
-      <div class="concept-divider">
-        <div class="label">Концепт B · Динамичный</div>
-        <h2>Танец <em>рук</em></h2>
+    <section class="concept-zone zone-b" id="concept-b-section">
+      <div class="zone-divider">
+        <div class="num-bg" aria-hidden="true">02</div>
+        <div class="center reveal">
+          <div class="label">Концепт B · Динамичный</div>
+          <h2>Танец <em>рук</em></h2>
+          <p class="tagline">Ритмичный монтаж движений бариста. Камера в гуще действия, slow-motion на ключевых моментах.</p>
+          <div class="scroll-hint">Прокрутите ниже</div>
+        </div>
       </div>
+      <div class="zone-content">
+        <div class="container">
 
       <section class="block reveal">
         <div class="block-grid">
@@ -1448,7 +1549,9 @@
           </div>
         </div>
       </section>
-    </div>
+        </div>
+      </div>
+    </section>
 
     <!-- ========== СРАВНЕНИЕ ========== -->
     <div class="container" id="compare">

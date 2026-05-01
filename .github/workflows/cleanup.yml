@@ -16,18 +16,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Нужна полная история, чтобы знать дату создания папок
+          fetch-depth: 0 # Нужна полная история
 
       - name: Remove concept folders older than 30 days
         run: |
           set -e
           REMOVED=0
-          # Перебираем все папки в docs/, кроме самого docs/
-          for dir in docs/*/; do
+          # Перебираем папки в корне репо. Кандидат — каталог из 8 hex-символов (UUID-папка).
+          for dir in */; do
             [ -d "$dir" ] || continue
-            folder_name=$(basename "$dir")
+            folder_name="${dir%/}"
 
-            # Получаем дату первого коммита, добавившего файл в этой папке
+            # Пропускаем системные/служебные папки
+            case "$folder_name" in
+              .github|.git|node_modules) continue ;;
+            esac
+
+            # Только UUID-папки (8 hex chars)
+            if ! echo "$folder_name" | grep -qE '^[a-f0-9]{8}$'; then
+              echo "Skipping non-UUID folder: $folder_name"
+              continue
+            fi
+
+            # Дата первого коммита, добавившего файлы в этой папке
             first_commit_date=$(git log --diff-filter=A --format="%aI" -- "$dir" | tail -1)
 
             if [ -z "$first_commit_date" ]; then
@@ -35,11 +46,11 @@ jobs:
               continue
             fi
 
-            # Возраст папки в днях
+            # Возраст в днях
             now_ts=$(date -u +%s)
-            created_ts=$(date -u -d "$first_commit_date" +%s 2>/dev/null || date -u -j -f "%Y-%m-%dT%H:%M:%S%z" "${first_commit_date%:*}${first_commit_date##*:}" +%s 2>/dev/null || echo 0)
+            created_ts=$(date -u -d "$first_commit_date" +%s 2>/dev/null || echo 0)
             if [ "$created_ts" = "0" ]; then
-              echo "Cannot parse date for $folder_name: $first_commit_date"
+              echo "Cannot parse date for $folder_name"
               continue
             fi
             age_days=$(( (now_ts - created_ts) / 86400 ))

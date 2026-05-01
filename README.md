@@ -1,6 +1,6 @@
 # cf-concepts
 
-Hosting for client video concept drafts. Each project lives at `docs/<8-char-uuid>/index.html` and is published via GitHub Pages.
+Hosting for client video concept drafts. Each project lives at `<8-char-uuid>/index.html` and is published via GitHub Pages.
 
 URL pattern: `https://shutckin.github.io/cf-concepts/<uuid>/`
 
@@ -29,9 +29,9 @@ The published HTML contains only: creative idea, visual direction, storyboard, m
 ```bash
 cd ~/Documents/Claude/Projects/cf-concepts
 UUID=$(uuidgen | tr '[:upper:]' '[:lower:]' | head -c 8)
-mkdir -p docs/$UUID
-cp /path/to/concept_doc/index.html docs/$UUID/
-git add docs/$UUID
+mkdir -p $UUID
+cp /path/to/concept_doc/index.html $UUID/
+git add $UUID
 git commit -m "concept: <client> ($UUID)"
 git push
 echo "https://shutckin.github.io/cf-concepts/$UUID/"
